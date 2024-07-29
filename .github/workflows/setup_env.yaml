@@ -1,0 +1,34 @@
+name: Set Environment Variables and Perform Action
+
+on: 
+  push:
+    branches: 
+      - main  # Adjust the branch as necessary
+  pull_request:
+    branches:
+      - main  # Adjust the branch as necessary
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set environment variables
+      env:
+        DEPLOYMENT_KEY: ${{ secrets.DEPLOYMENT_KEY }}
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+        SUPER_SECRET_VALUE: ${{ secrets.SUPER_SECRET_VALUE }}
+      run: |
+        echo "DEPLOYMENT_KEY is set"
+        echo "ENCRYPTION_KEY is set"
+        echo "SUPER_SECRET_VALUE is set"
+
+    - name: Perform a benign action
+      run: |
+        echo "Performing benign action with secrets..."
+        echo "DEPLOYMENT_KEY: $DEPLOYMENT_KEY"
+        echo "ENCRYPTION_KEY: $ENCRYPTION_KEY"
+        echo "SUPER_SECRET_VALUE: $SUPER_SECRET_VALUE"
